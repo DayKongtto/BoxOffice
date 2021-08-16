@@ -6,7 +6,8 @@
 //
 
 import UIKit
+import SnapKit
 
-class MovieCollectionViewCell: UICollectionViewCell {
+class MovieCollectionViewCell: BaseCollectionViewCell {
     
 }

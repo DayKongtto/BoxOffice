@@ -29,10 +29,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="bbm-1M-Bs1" kind="show" id="RcD-yI-kgK"/>
+                                            <segue destination="bbm-1M-Bs1" kind="show" identifier="showTableDetailView" id="RcD-yI-kgK"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="F88-9K-ScF"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="2g4-8w-Gv9"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -47,6 +51,9 @@
                     <navigationItem key="navigationItem" title="영화목록" id="IbC-h9-0z6">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="ic_settings" landscapeImage="ic_settings" id="br9-jh-sgf"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="TUS-Oy-EpU" id="VBt-zw-zNr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -138,6 +145,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="o80-Aw-46V" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="i0s-b1-2gx">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -190,7 +198,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jo7-2a-IJH"/>
+        <segue reference="RcD-yI-kgK"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="ic_collection" width="25" height="25"/>
