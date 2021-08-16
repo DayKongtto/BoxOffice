@@ -89,10 +89,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
                                         <connections>
-                                            <segue destination="bbm-1M-Bs1" kind="show" id="jo7-2a-IJH"/>
+                                            <segue destination="bbm-1M-Bs1" kind="show" identifier="showCollectionDetailView" id="jo7-2a-IJH"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Czv-FQ-2um" id="pub-fg-CjI"/>
+                                    <outlet property="delegate" destination="Czv-FQ-2um" id="5No-NP-ZnI"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="GO1-LG-Epq"/>
@@ -105,8 +109,15 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="영화목록" id="drZ-cI-qDR">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="ic_settings" landscapeImage="ic_settings" id="nPa-xH-Ekp"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ic_settings" landscapeImage="ic_settings" id="nPa-xH-Ekp">
+                            <connections>
+                                <action selector="touchUpShowActionSOrderButton" destination="Czv-FQ-2um" id="xJ6-Pp-dQ0"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="collectionView" destination="eWW-iA-aia" id="ifU-O2-iT6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pFR-fb-o3D" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -202,7 +213,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="RcD-yI-kgK"/>
+        <segue reference="jo7-2a-IJH"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="ic_collection" width="25" height="25"/>

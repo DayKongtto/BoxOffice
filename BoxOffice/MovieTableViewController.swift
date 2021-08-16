@@ -170,9 +170,6 @@ extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
                 
             }
         }
-
-
-        
         
         return cell
     }

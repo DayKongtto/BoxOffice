@@ -55,6 +55,10 @@ struct Movie: Codable {
     var info: String {
         return "평점:\(self.user_rating) 예매순위:\(self.reservation_grade) 예매율:\(self.reservation_rate)"
     }
+    
+    var collectionInfo: String {
+        return "\(self.reservation_grade)위(\(self.reservation_rate)) \(self.reservation_rate)%"
+    }
 
     var dateInfo: String {
         return "개봉일: \(self.date)"
