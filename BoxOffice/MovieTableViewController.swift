@@ -27,7 +27,16 @@ class MovieTableViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/movies?order_type=1") else { return }
+        self.tableOrderChange(0)
+    }
+    
+    @IBAction func touchUpShowActionSOrderButton()
+    {
+        self.showAlertController(style: UIAlertController.Style.actionSheet)
+    }
+    
+    func tableOrderChange(_ orderType: Int) {
+        guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/movies?order_type=\(orderType)") else { return }
         
         let sesstion: URLSession = URLSession(configuration: .default)
         let dataTask: URLSessionDataTask = sesstion.dataTask(with: url) { ( data: Data?, response: URLResponse?, error: Error?) in
@@ -42,7 +51,6 @@ class MovieTableViewController: UIViewController {
                 let apiResponse: MovieAPIResponse = try JSONDecoder().decode(MovieAPIResponse.self, from: data)
 //                print(apiResponse.movies);
                 self.movies = apiResponse.movies
-                print("count : \(self.movies.count)")
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
@@ -52,6 +60,37 @@ class MovieTableViewController: UIViewController {
         }
         
         dataTask.resume()
+    }
+    
+    func  showAlertController(style: UIAlertController.Style) {
+        
+        let alertController: UIAlertController
+        alertController = UIAlertController(title: "정렬방식 선택", message: "영화를 어떤 순서로 정렬할까요?", preferredStyle: style)
+        
+        let rateAction: UIAlertAction
+        rateAction = UIAlertAction(title: "예매율", style: UIAlertAction.Style.default) { (action) in
+            self.tableOrderChange(0)
+        }
+        
+        let curationAction: UIAlertAction
+        curationAction = UIAlertAction(title: "큐레이션", style: UIAlertAction.Style.default) { (action) in
+            self.tableOrderChange(1)
+        }
+        
+        let dateAction: UIAlertAction
+        dateAction = UIAlertAction(title: "개봉일", style: UIAlertAction.Style.default) { (action) in
+            self.tableOrderChange(2)
+        }
+        
+        let cancelAction: UIAlertAction
+        cancelAction = UIAlertAction(title: "취소", style: UIAlertAction.Style.cancel, handler: nil)
+        
+        alertController.addAction(rateAction)
+        alertController.addAction(curationAction)
+        alertController.addAction(dateAction)
+        alertController.addAction(cancelAction)
+        
+        self.present(alertController, animated: true, completion: nil)
     }
     
 
@@ -67,7 +106,7 @@ class MovieTableViewController: UIViewController {
         }
         
         if let index: Int = selectedCellIndexRow {
-//            nextViewController.currentCoutry = movies[index]
+            nextViewController.currentID = movies[index].id
         }
     }
 
@@ -88,8 +127,6 @@ extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
         cell.titleLabel.text = movie.title
         cell.infoLabel.text = movie.info
         cell.dateLabel.text = movie.dateInfo
-        
-        print("row: \(indexPath.row)")
 
         guard let thumbImage: UIImage = UIImage(named: "img_placeholder") else{
             print("no thumb image")
@@ -109,8 +146,6 @@ extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
         DispatchQueue.global().async {
             guard let thumbURL: URL = URL(string: tumbName) else { return }
             guard let thumbData: Data = try? Data(contentsOf: thumbURL) else { return }
-            
-            print("image data ok")
             
             DispatchQueue.main.async {
                 if let index: IndexPath = tableView.indexPath(for: cell) {

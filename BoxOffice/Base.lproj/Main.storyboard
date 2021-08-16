@@ -49,7 +49,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="영화목록" id="IbC-h9-0z6">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="ic_settings" landscapeImage="ic_settings" id="br9-jh-sgf"/>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="ic_settings" landscapeImage="ic_settings" id="br9-jh-sgf">
+                            <connections>
+                                <action selector="touchUpShowActionSOrderButton" destination="BYZ-38-t0r" id="Nam-4R-elX"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="TUS-Oy-EpU" id="VBt-zw-zNr"/>

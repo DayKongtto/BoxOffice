@@ -53,7 +53,7 @@ struct Movie: Codable {
     let id: String
     
     var info: String {
-        return "평점: \(self.user_rating) 예매순위: \(self.reservation_grade) 예매율: \(self.reservation_rate)"
+        return "평점:\(self.user_rating) 예매순위:\(self.reservation_grade) 예매율:\(self.reservation_rate)"
     }
 
     var dateInfo: String {
