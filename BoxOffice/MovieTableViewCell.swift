@@ -32,9 +32,8 @@ class MovieTableViewCell: BaseTableViewCell {
         contentView.addSubview(thumbImageView)
         thumbImageView.snp.makeConstraints { (make) -> Void in
             make.left.equalTo(contentView).offset(8)
-            make.top.equalTo(contentView)
-            make.bottom.equalTo(contentView)
-            make.height.equalTo(thumbImageView.snp.width)
+            make.top.equalTo(contentView).offset(5)
+            make.bottom.equalTo(contentView).offset(-5)
         }
         contentView.addSubview(infoLabel)
         infoLabel.snp.makeConstraints { (make) -> Void in

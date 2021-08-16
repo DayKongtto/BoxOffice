@@ -60,6 +60,7 @@ class MovieTableViewController: UIViewController {
         }
         
         dataTask.resume()
+        self.navigationItem.title = self.orderName(orderType)
     }
     
     func  showAlertController(style: UIAlertController.Style) {
@@ -91,6 +92,19 @@ class MovieTableViewController: UIViewController {
         alertController.addAction(cancelAction)
         
         self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func orderName(_ orderType: Int) -> String {
+        switch orderType {
+        case 0:
+            return "예매율"
+        case 1:
+            return "큐레이션"
+        case 2:
+            return "개봉일"
+        default:
+            return "no"
+        }
     }
     
 

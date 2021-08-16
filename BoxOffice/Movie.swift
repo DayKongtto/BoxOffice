@@ -69,20 +69,3 @@ struct Movie: Codable {
         }
     }
 }
-
-//struct MovieInfo: Codable {
-//
-//    let grade: String
-//    let thumb: String
-//    let reservationGrade: String
-//    let title: String
-//    let reservationRate: String
-//    let userRating: String
-//    let date: String
-//    let id: String
-//
-//    enum CodingKeys: String, CodingKey {
-//        case reservationGrade = "reservation_grade"
-//        case reservationRate = "reservation_rate"
-//    }
-//}
