@@ -31,26 +31,31 @@ class MovieCollectionViewCell: BaseCollectionViewCell {
         contentView.addSubview(thumbImageView)
         thumbImageView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(contentView).offset(5)
-            make.bottom.equalTo(contentView).offset(-20)
+            make.bottom.equalTo(contentView).offset(-60)
+            make.left.equalTo(contentView.snp.left).offset(20)
+            make.right.equalTo(contentView.snp.right).offset(-20)
             make.centerX.equalTo(contentView)
         }
+        contentView.addSubview(gradeImageView)
         gradeImageView.snp.makeConstraints { (make) -> Void in
             make.top.equalTo(thumbImageView)
             make.right.equalTo(thumbImageView)
-            make.left.equalTo(thumbImageView.snp.width).offset(40)
-            make.height.equalTo(gradeImageView.snp.width)
+            make.width.height.equalTo(20)
         }
+        contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(thumbImageView)
-            make.top.equalTo(thumbImageView).offset(10)
+            make.top.equalTo(thumbImageView.snp.bottom).offset(10)
         }
+        contentView.addSubview(infoLabel)
         infoLabel.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(thumbImageView)
-            make.top.equalTo(titleLabel).offset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(5)
         }
+        contentView.addSubview(dateLabel)
         dateLabel.snp.makeConstraints { (make) -> Void in
             make.centerX.equalTo(thumbImageView)
-            make.top.equalTo(infoLabel).offset(10)
+            make.top.equalTo(infoLabel.snp.bottom).offset(5)
         }
     }
 }

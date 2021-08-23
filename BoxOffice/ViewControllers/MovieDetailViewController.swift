@@ -9,11 +9,14 @@ import UIKit
 
 class MovieDetailViewController: UIViewController {
     var currentID: String?
-
+    @IBOutlet weak var reviewViewHeight: NSLayoutConstraint!
+    
+    var reviewArray: [String] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        reviewViewHeight.constant = CGFloat(reviewArray.count * 70) + 20
     }
     
 
