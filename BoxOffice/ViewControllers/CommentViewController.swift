@@ -12,8 +12,9 @@ class CommentViewController: UIViewController {
     @IBOutlet weak var ratingTextField: UITextField!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var contentTextField: UITextField!
-    var currentMovieDetail: MovieDetail?
-
+    var currentID: String?
+    var currentTitle: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,15 +23,38 @@ class CommentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        guard let movieDetail: MovieDetail = currentMovieDetail else { return }
-        
-        titleLabel.text = movieDetail.title
     }
     
     @IBAction func touchUpSend()
     {
-        var comment: CommentSend
+        guard let ratingText: String = ratingTextField.text else {
+            return
+        }
+        let rating: Double? = Double(ratingText)
+        guard let currentRating: Double = rating else {
+            return
+        }
+        
+        guard let writerText: String = nameTextField.text else {
+            return
+        }
+        
+        guard let contentsText: String = contentTextField.text else {
+            return
+        }
+        
+        guard let id: String = currentID else {
+            return
+        }
+        
+        let timeStamp: Double = 0
+        
+        let comment: CommentSend = CommentSend(rating: currentRating, writer: writerText, timestamp: timeStamp, movie_id: id, contents: contentsText)
+    }
+    
+    @IBAction func touchUpSendBarButton()
+    {
+        self.navigationController?.popViewController(animated: true)
     }
 
     /*
