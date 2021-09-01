@@ -9,5 +9,6 @@ target 'BoxOffice' do
 
 pod 'Reusable'
 pod 'SnapKit', '~> 5.0.0'
+pod 'Cosmos', '~> 23.0'
 
 end
