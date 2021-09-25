@@ -155,10 +155,10 @@ extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
         }
         cell.gradeImageView.image = gradeImage
 
-        let tumbName: String = movie.thumb
+        let thumbName: String = movie.thumb
         
         DispatchQueue.global().async {
-            guard let thumbURL: URL = URL(string: tumbName) else { return }
+            guard let thumbURL: URL = URL(string: thumbName) else { return }
             guard let thumbData: Data = try? Data(contentsOf: thumbURL) else { return }
             
             DispatchQueue.main.async {

@@ -6,11 +6,28 @@
 //
 
 import UIKit
+import Cosmos
 
 class MovieDetailViewController: UIViewController {
     var currentID: String?
     @IBOutlet weak var reviewViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var thumbImageView: UIImageView!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var gradeImageView: UIImageView!
+    @IBOutlet weak var infoLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    
+    @IBOutlet weak var reservationLabel: UILabel!
+    @IBOutlet weak var userRatingLabel: UILabel!
+    @IBOutlet weak var userRatingCosmosView: CosmosView!
+    @IBOutlet weak var audienceLabel: UILabel!
+    
+    @IBOutlet weak var synopsisLabel: UILabel!
+    
+    @IBOutlet weak var directorLabel: UILabel!
+    @IBOutlet weak var actorLabel: UILabel!
     
     var detail: MovieDetail?
     var comments: [CommentReceive] = []
@@ -62,7 +79,52 @@ class MovieDetailViewController: UIViewController {
                         return
                     }
                     self.navigationItem.title = movieDetail.title
+                    
+                    self.titleLabel.text = movieDetail.title
+                    self.infoLabel.text = movieDetail.info
+                    self.dateLabel.text = movieDetail.dateInfo
+                    
+                    self.reservationLabel.text = movieDetail.reservationInfo
+                    self.userRatingLabel.text = "\(movieDetail.user_rating)"
+                    self.userRatingCosmosView.rating = movieDetail.user_rating
+                    
+                    let numberFormatter = NumberFormatter()
+                    numberFormatter.numberStyle = .decimal
+                    let result = numberFormatter.string(for: movieDetail.audience)!
+                    self.audienceLabel.text = result
+                    
+                    self.synopsisLabel.text = movieDetail.synopsis
+                    
+                    self.directorLabel.text = movieDetail.director
+                    self.actorLabel.text = movieDetail.actor
+                    
+
+                    guard let thumbImage: UIImage = UIImage(named: "img_placeholder") else{
+                        print("no thumb image")
+                        return
+                    }
+                    self.thumbImageView.image = thumbImage
+
+                    let gradeName: String = movieDetail.gradeName
+                    guard let gradeImage: UIImage = UIImage(named: gradeName) else{
+                        print("no grade image")
+                        return
+                    }
+                    self.gradeImageView.image = gradeImage
+
+                    let thumbName: String = movieDetail.image
+                    
+                    DispatchQueue.global().async {
+                        guard let thumbURL: URL = URL(string: thumbName) else { return }
+                        guard let thumbData: Data = try? Data(contentsOf: thumbURL) else { return }
+                        
+                        DispatchQueue.main.async {
+                            self.thumbImageView.image = UIImage(data: thumbData)
+                        }
+                    }
                 }
+
+
             } catch (let err) {
                 print(err.localizedDescription)
             }
@@ -114,6 +176,10 @@ class MovieDetailViewController: UIViewController {
         
         if let id: String = currentID {
             nextViewController.currentID = id
+        }
+        
+        if let movieDetail: MovieDetail =  detail {
+            nextViewController.currentMovie = movieDetail
         }
     }
 }

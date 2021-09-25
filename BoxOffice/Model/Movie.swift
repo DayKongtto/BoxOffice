@@ -107,6 +107,27 @@ struct MovieDetail: Codable {
     let image: String
     let synopsis: String
     let genre: String
+    
+    var info: String {
+        return "\(genre)/\(duration)분"
+    }
+    
+    var reservationInfo: String {
+        return "\(self.reservation_grade)위  \(self.reservation_rate)%"
+    }
+
+    var dateInfo: String {
+        return "\(self.date) 개봉"
+    }
+
+    var gradeName: String {
+        switch self.grade {
+        case 0:
+            return "ic_allages"
+        default:
+            return "ic_\(self.grade)"
+        }
+    }
 }
 
 
@@ -146,7 +167,6 @@ struct CommentReceive: Codable {
 struct CommentSend: Codable {
     let rating: Double
     let writer: String
-    let timestamp: Double
     let movie_id: String
     let contents: String
 }
