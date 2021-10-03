@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Cosmos
 
 class MovieCommentTableViewCell: BaseTableViewCell {
 
@@ -16,11 +17,19 @@ class MovieCommentTableViewCell: BaseTableViewCell {
         label.font = UIFont.systemFont(ofSize: 10)
         return label
     }()
-    let ratingLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 10)
-        return label
+//    let ratingLabel: UILabel = {
+//        let label = UILabel()
+//        label.font = UIFont.systemFont(ofSize: 10)
+//        return label
+//    }()
+    let cosmosSetting: CosmosSettings = {
+        var setting = CosmosSettings()
+        setting.fillMode = .half
+        setting.totalStars = 5
+        setting.starSize = 10
+        return setting
     }()
+    lazy var cosmosView: CosmosView = CosmosView(settings: cosmosSetting)
     let dateLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 10)
@@ -46,8 +55,13 @@ class MovieCommentTableViewCell: BaseTableViewCell {
             make.top.equalTo(contentView).offset(20)
             make.left.equalTo(profileImageView.snp.right).offset(10)
         }
-        contentView.addSubview(ratingLabel)
-        ratingLabel.snp.makeConstraints { (make) -> Void in
+//        contentView.addSubview(ratingLabel)
+//        ratingLabel.snp.makeConstraints { (make) -> Void in
+//            make.centerY.equalTo(writerLabel)
+//            make.left.equalTo(writerLabel.snp.right).offset(10)
+//        }
+        contentView.addSubview(cosmosView)
+        cosmosView.snp.makeConstraints { (make) -> Void in
             make.centerY.equalTo(writerLabel)
             make.left.equalTo(writerLabel.snp.right).offset(10)
         }

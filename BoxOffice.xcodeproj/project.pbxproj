@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0B7A09E8B4EF3568289178A6 /* Pods_BoxOffice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00062C159745E8A1FEF9FD97 /* Pods_BoxOffice.framework */; };
+		6921FE0927092D4A007E6693 /* MovieDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6921FE0827092D4A007E6693 /* MovieDetailModel.swift */; };
 		692B613426C764A30047F07A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B613326C764A30047F07A /* AppDelegate.swift */; };
 		692B613626C764A30047F07A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B613526C764A30047F07A /* SceneDelegate.swift */; };
 		692B613826C764A30047F07A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B613726C764A30047F07A /* ViewController.swift */; };
@@ -31,6 +32,7 @@
 
 /* Begin PBXFileReference section */
 		00062C159745E8A1FEF9FD97 /* Pods_BoxOffice.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BoxOffice.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6921FE0827092D4A007E6693 /* MovieDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailModel.swift; sourceTree = "<group>"; };
 		692B613026C764A30047F07A /* BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692B613326C764A30047F07A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		692B613526C764A30047F07A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				692B615926C7ACC50047F07A /* Movie.swift */,
 				69C3341C26FF02E50066AFDB /* MovieModel.swift */,
 				69C3342126FF0E980066AFDB /* CommentModel.swift */,
+				6921FE0827092D4A007E6693 /* MovieDetailModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 				692B615826C79FA40047F07A /* BaseCollectionViewCell.swift in Sources */,
 				692B613426C764A30047F07A /* AppDelegate.swift in Sources */,
 				692B614C26C78F5F0047F07A /* MovieDetailViewController.swift in Sources */,
+				6921FE0927092D4A007E6693 /* MovieDetailModel.swift in Sources */,
 				692B615426C790210047F07A /* MovieCollectionViewCell.swift in Sources */,
 				692B613626C764A30047F07A /* SceneDelegate.swift in Sources */,
 				69EABC3B26CA64B000F3B86E /* MovieCommentTableViewCell.swift in Sources */,

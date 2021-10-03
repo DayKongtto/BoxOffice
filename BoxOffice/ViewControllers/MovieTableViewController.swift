@@ -38,31 +38,6 @@ class MovieTableViewController: UIViewController {
     }
     
     func tableOrderChange(_ orderType: Int) {
-//        guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/movies?order_type=\(orderType)") else { return }
-//
-//        let sesstion: URLSession = URLSession(configuration: .default)
-//        let dataTask: URLSessionDataTask = sesstion.dataTask(with: url) { ( data: Data?, response: URLResponse?, error: Error?) in
-//            if let error = error {
-//                print(error.localizedDescription)
-//                return
-//            }
-//
-//            guard let data = data else { return }
-//
-//            do {
-//                let apiResponse: MovieAPIResponse = try JSONDecoder().decode(MovieAPIResponse.self, from: data)
-////                print(apiResponse.movies);
-//                self.movies = apiResponse.movies
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//            } catch (let err) {
-//                print(err.localizedDescription)
-//            }
-//        }
-//
-//        dataTask.resume()
-//        self.navigationItem.title = self.orderName(orderType)
         AF.request("\(BASE_URL)/movies?order_type=\(orderType)", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { [weak self] response in
             if let result = response.value as? [String : Any], let movieResponseModel = MovieResponseModel(JSON: result) {
                 self?.movieModels = movieResponseModel.movies
@@ -148,21 +123,25 @@ extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
         let movie: MovieModel = self.movieModels[indexPath.row]
 
         cell.titleLabel.text = movie.title
-//        cell.infoLabel.text = movie.info
-//        cell.dateLabel.text = movie.dateInfo
+        cell.infoLabel.text = "평점:\(movie.userRating ?? 0) 예매순위:\(movie.reservationGrade ?? 0) 예매율:\(movie.reservationRate ?? 0)"
+        cell.dateLabel.text = "개봉일: \(movie.date ?? "")"
 
         guard let thumbImage: UIImage = UIImage(named: "img_placeholder") else{
             print("no thumb image")
             return cell
         }
         cell.thumbImageView.image = thumbImage
-
-//        guard let gradeName: String = movie.gradeName else { return cell}
-//        guard let gradeImage: UIImage = UIImage(named: gradeName) else{
-//            print("no grade image")
-//            return cell
-//        }
-//        cell.gradeImageView.image = gradeImage
+        
+        if let grade = movie.grade {
+            if let gradeName: String = getGradeName(grade)
+            {
+                guard let gradeImage: UIImage = UIImage(named: gradeName) else{
+                    print("no grade image")
+                    return cell
+                }
+                cell.gradeImageView.image = gradeImage
+            }
+        }
 
         //kingfisher
         guard let thumbName: String = movie.thumb else { return cell}

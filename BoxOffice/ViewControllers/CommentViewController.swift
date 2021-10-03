@@ -18,10 +18,11 @@ class CommentViewController: UIViewController {
     @IBOutlet weak var contentTextField: UITextField!
     
     var currentID: String?
-    var currentMovie: MovieDetail?
+    var currentMovie: MovieDetailModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.cosmosView.settings.minTouchRating = 0.5
         self.cosmosView.didTouchCosmos = { [weak self] rating in
             self?.changedUserRating(rating: rating)
         }
@@ -31,26 +32,27 @@ class CommentViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        let test: Test = Test()
-//        test.tapEvent = { [weak self] value in
-//            self?.changedUserRating(rating: value)
-//        }
         
-        if let movieDetail: MovieDetail = currentMovie {
+        if let movieDetail = currentMovie {
             titleLabel.text = movieDetail.title
+            changedUserRating(rating: cosmosView.rating)
             
-            let gradeName: String = movieDetail.gradeName
-            guard let gradeImage: UIImage = UIImage(named: gradeName) else{
-                print("no grade image")
-                return
+            if let grade = movieDetail.grade {
+                if let gradeName: String = getGradeName(grade)
+                {
+                    guard let gradeImage: UIImage = UIImage(named: gradeName) else{
+                        print("no grade image")
+                        return
+                    }
+                    self.gradeImageView.image = gradeImage
+                }
             }
-            self.gradeImageView.image = gradeImage
         }
     }
     
     func changedUserRating(rating : Double)
     {
-        ratingLabel.text = "\(cosmosView.rating)"
+        ratingLabel.text = "\(Int(cosmosView.rating * 2))"
     }
     
     @IBAction func cancelTouchUP()
@@ -65,7 +67,7 @@ class CommentViewController: UIViewController {
     
     func sendComment()
     {
-        let param: [String: Any] = [ "rating": cosmosView.rating,
+        let param: [String: Any] = [ "rating": cosmosView.rating * 2,
                                      "writer": nameTextField.text ?? "",
                                      "movie_id": currentID ?? "",
                                      "contents": contentTextField.text ?? ""]
@@ -77,72 +79,5 @@ class CommentViewController: UIViewController {
                 print("error")
             }
         }
-        
-//        let currentRating: Double = cosmosView.rating
-//        guard let writerText: String = nameTextField.text else {
-//            return
-//        }
-//
-//        guard let contentsText: String = contentTextField.text else {
-//            return
-//        }
-//
-//        guard let id: String = currentID else {
-//            return
-//        }
-//
-////        let timeStamp: Double = Date().timeIntervalSince1970
-//
-//        let comment: CommentSend = CommentSend(rating: currentRating, writer: writerText, movie_id: id, contents: contentsText)
-//        dataRequest(comment)
     }
-    
-//    func dataRequest(_ comment: CommentSendModel?) {
-//
-//        guard let uploadData = try? JSONEncoder().encode(comment) else {
-//            return
-//        }
-//
-//        let url = URL(string: "http://connect-boxoffice.run.goorm.io/comment")!
-//        var request = URLRequest(url: url)
-//        request.httpMethod = "POST"
-//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//
-//        let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
-//            if let error = error {
-//                print ("error: \(error)")
-//                return
-//            }
-//            guard let response = response as? HTTPURLResponse,
-//                (200...299).contains(response.statusCode) else {
-//                print ("server error")
-//                return
-//            }
-//            if let mimeType = response.mimeType,
-//                mimeType == "application/json",
-//                let data = data,
-//                let dataString = String(data: data, encoding: .utf8) {
-//                print ("got data: \(dataString)")
-//            }
-//
-//
-//            DispatchQueue.main.async { [weak self] in
-//                guard let self = self else { return }
-//                self.navigationController?.popViewController(animated: true)
-//            }
-//        }
-//        task.resume()
-        
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

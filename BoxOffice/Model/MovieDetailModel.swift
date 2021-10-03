@@ -1,48 +1,48 @@
 //
-//  MovieModel.swift
+//  MovieDetailModel.swift
 //  BoxOffice
 //
-//  Created by PSJ on 2021/09/25.
+//  Created by PSJ on 2021/10/03.
 //
 
 import ObjectMapper
 
-class MovieResponseModel: Mappable {
-    var orderType: Int?
-    var movies: [MovieModel] = []
-    
-    required init?(map: Map) {
-        
-    }
-    
-    func mapping(map: Map) {
-        orderType <- map["order_type"]
-        movies <- map["movies"]
-    }
-}
-
-class MovieModel: Mappable {
+class MovieDetailModel: Mappable {
+    var audience: Double?
     var grade: Int?
-    var thumb: String?
+    var actor: String?
+    var duration: Int?
     var reservationGrade: Int?
     var title: String?
     var reservationRate: Double?
-    var userRating: Double?
+    var userRating:Double?
     var date: String?
+    var director: String?
     var id: String?
+    var image: String?
+    var synopsis: String?
+    var genre: String?
     
     required init?(map: Map) {
         
     }
     
     func mapping(map: Map) {
+        audience <- map["audience"]
         grade <- map["grade"]
-        thumb <- map["thumb"]
+        actor <- map["actor"]
+        duration <- map["duration"]
         reservationGrade <- map["reservation_grade"]
         title <- map["title"]
         reservationRate <- map["reservation_rate"]
         userRating <- map["user_rating"]
         date <- map["date"]
+        director <- map["director"]
         id <- map["id"]
+        image <- map["image"]
+        synopsis <- map["synopsis"]
+        genre <- map["genre"]
     }
+    
+    
 }

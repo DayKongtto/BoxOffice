@@ -25,6 +25,18 @@ class CommentSendModel: Mappable {
     }
 }
 
+class CommentResponseModel: Mappable {
+    var comments: [CommentReceiveModel] = []
+    
+    required init?(map: Map) {
+        
+    }
+    
+    func mapping(map: Map) {
+        comments <- map["comments"]
+    }
+}
+
 class CommentReceiveModel: CommentSendModel {
     var id: String?
     var timestamp: Double?

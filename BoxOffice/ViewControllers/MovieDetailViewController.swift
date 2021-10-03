@@ -7,6 +7,7 @@
 
 import UIKit
 import Cosmos
+import Alamofire
 
 class MovieDetailViewController: UIViewController {
     var currentID: String?
@@ -29,13 +30,8 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet weak var directorLabel: UILabel!
     @IBOutlet weak var actorLabel: UILabel!
     
-    var detail: MovieDetail?
-    var comments: [CommentReceive] = []
-    
-//    lazy var infoView: UIView = {
-//        let view = UIView()
-//        return view
-//    }()
+    var detailModel: MovieDetailModel?
+    var commentModels: [CommentReceiveModel] = []
     
     let cellHeight: CGFloat = 120
     
@@ -51,7 +47,6 @@ class MovieDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if let id: String = currentID {
             self.detailChange(id)
             self.commentChange(id)
@@ -59,108 +54,79 @@ class MovieDetailViewController: UIViewController {
     }
     
     func detailChange(_ id: String) {
-        guard let url: URL = URL(string: "http://connect-boxoffice.run.goorm.io/movie?id=\(id)") else { return }
-        
-        let sesstion: URLSession = URLSession(configuration: .default)
-        let dataTask: URLSessionDataTask = sesstion.dataTask(with: url) { ( data: Data?, response: URLResponse?, error: Error?) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-                        
-            do {
-                let apiResponse: MovieDetail = try JSONDecoder().decode(MovieDetail.self, from: data)
+        AF.request("\(BASE_URL)/movie?id=\(id)", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON {
+            [weak self] response in
+            if let result = response.value as? [String : Any], let movieDetailModel = MovieDetailModel(JSON: result) {
+                self?.detailModel = movieDetailModel
                 
-                self.detail = apiResponse
-                DispatchQueue.main.async {
-                    guard let movieDetail: MovieDetail = self.detail else {
-                        return
-                    }
-                    self.navigationItem.title = movieDetail.title
-                    
-                    self.titleLabel.text = movieDetail.title
-                    self.infoLabel.text = movieDetail.info
-                    self.dateLabel.text = movieDetail.dateInfo
-                    
-                    self.reservationLabel.text = movieDetail.reservationInfo
-                    self.userRatingLabel.text = "\(movieDetail.user_rating)"
-                    self.userRatingCosmosView.rating = movieDetail.user_rating
-                    
-                    let numberFormatter = NumberFormatter()
-                    numberFormatter.numberStyle = .decimal
-                    let result = numberFormatter.string(for: movieDetail.audience)!
-                    self.audienceLabel.text = result
-                    
-                    self.synopsisLabel.text = movieDetail.synopsis
-                    
-                    self.directorLabel.text = movieDetail.director
-                    self.actorLabel.text = movieDetail.actor
-                    
+                self?.navigationItem.title = movieDetailModel.title
 
-                    guard let thumbImage: UIImage = UIImage(named: "img_placeholder") else{
-                        print("no thumb image")
-                        return
-                    }
-                    self.thumbImageView.image = thumbImage
+                self?.titleLabel.text = movieDetailModel.title
+                self?.infoLabel.text = "\(movieDetailModel.genre ?? "")/\(movieDetailModel.duration ?? 0)분"
+                self?.dateLabel.text = "\(movieDetailModel.date ?? "") 개봉"
 
-                    let gradeName: String = movieDetail.gradeName
-                    guard let gradeImage: UIImage = UIImage(named: gradeName) else{
-                        print("no grade image")
-                        return
-                    }
-                    self.gradeImageView.image = gradeImage
+                self?.reservationLabel.text = "\(movieDetailModel.reservationGrade ?? 0)위  \(movieDetailModel.reservationRate ?? 0)%"
+                self?.userRatingLabel.text = "\(movieDetailModel.userRating ?? 0)"
+                if let userRating = movieDetailModel.userRating {
+                    self?.userRatingCosmosView.rating = userRating * 0.5
+                }
+                
+                let numberFormatter = NumberFormatter()
+                numberFormatter.numberStyle = .decimal
+                let result = numberFormatter.string(for: movieDetailModel.audience)!
+                self?.audienceLabel.text = result
 
-                    let thumbName: String = movieDetail.image
-                    
+                self?.synopsisLabel.text = movieDetailModel.synopsis
+
+                self?.directorLabel.text = movieDetailModel.director
+                self?.actorLabel.text = movieDetailModel.actor
+                
+                guard let thumbImage: UIImage = UIImage(named: "img_placeholder") else{
+                    print("no thumb image")
+                    return
+                }
+                self?.thumbImageView.image = thumbImage
+                
+                if let grade = movieDetailModel.grade {
+                    if let gradeName: String = getGradeName(grade)
+                    {
+                        guard let gradeImage: UIImage = UIImage(named: gradeName) else{
+                            print("no grade image")
+                            return
+                        }
+                        self?.gradeImageView.image = gradeImage
+                    }
+                }
+
+                if let thumbName: String = movieDetailModel.image{
                     DispatchQueue.global().async {
                         guard let thumbURL: URL = URL(string: thumbName) else { return }
                         guard let thumbData: Data = try? Data(contentsOf: thumbURL) else { return }
-                        
+
                         DispatchQueue.main.async {
-                            self.thumbImageView.image = UIImage(data: thumbData)
+                            self?.thumbImageView.image = UIImage(data: thumbData)
                         }
                     }
                 }
 
 
-            } catch (let err) {
-                print(err.localizedDescription)
             }
         }
-        
-        dataTask.resume()
     }
     
     func commentChange(_ id: String) {
-        guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/comments?movie_id=\(id)") else { return }
-        
-        let sesstion: URLSession = URLSession(configuration: .default)
-        let dataTask: URLSessionDataTask = sesstion.dataTask(with: url) { [weak self] ( data: Data?, response: URLResponse?, error: Error?) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-                        
-            do {
-                let apiResponse: CommentAPIReponse = try JSONDecoder().decode(CommentAPIReponse.self, from: data)
-                self?.comments = apiResponse.comments
-                
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    self.reviewViewHeight.constant = self.cellHeight * CGFloat(self.comments.count) + 20
-//                     CGFloat(self.comments.count * 120) -> 한줄평 수 * 120(각 셀 별 높이)
-                    self.tableView.reloadData()
+        AF.request("\(BASE_URL)/comments?movie_id=\(id)", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { [weak self] response in
+            if let result = response.value as? [String : Any], let commentResponseModel = CommentResponseModel(JSON: result) {
+                self?.commentModels = commentResponseModel.comments
+                if let count = self?.commentModels.count {
+                    if let heigt = self?.cellHeight {
+                        self?.reviewViewHeight.constant = heigt * CGFloat(count) + 20
+        //                     CGFloat(self.comments.count * 120) -> 한줄평 수 * 120(각 셀 별 높이)
+                    }
                 }
-            } catch (let err) {
-                print(err.localizedDescription)
+                self?.tableView.reloadData()
             }
         }
-        
-        dataTask.resume()
     }
     
     // MARK: - Navigation
@@ -178,7 +144,7 @@ class MovieDetailViewController: UIViewController {
             nextViewController.currentID = id
         }
         
-        if let movieDetail: MovieDetail =  detail {
+        if let movieDetail: MovieDetailModel =  detailModel {
             nextViewController.currentMovie = movieDetail
         }
     }
@@ -186,19 +152,21 @@ class MovieDetailViewController: UIViewController {
 
 extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.comments.count
+        return self.commentModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell: CodeCountryTableViewCell = tableView.dequeueReusableCell(withIdentifier: self.cellIndentifier, for: indexPath) as! CodeCountryTableViewCell
         let cell = tableView.dequeueReusableCell(for: indexPath) as MovieCommentTableViewCell
         
-//        cell.leftLabel.text = self.dateFormatter.string(from: self.dates[indexPath.row])
-        let comment: CommentReceive = self.comments[indexPath.row]
+        let comment: CommentReceiveModel = self.commentModels[indexPath.row]
 
         cell.writerLabel.text = comment.writer
-        cell.ratingLabel.text = "\(comment.rating)"
-        cell.dateLabel.text = "\(comment.timestamp)"
+        if let cosmosRating = comment.rating {
+            cell.cosmosView.rating = cosmosRating * 0.5
+        }
+        if let date: String = timeFormatter(timestamp: TimeInterval(comment.timestamp ?? 0)) {
+            cell.dateLabel.text = "\(date)"
+        }
         cell.commentLabel.text = comment.contents
 
         guard let profileImage: UIImage = UIImage(named: "ic_user_loading") else{
