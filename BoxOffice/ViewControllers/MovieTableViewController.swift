@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import Alamofire
 
 class MovieTableViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     var selectedCellIndexRow: Int?
     
-    var movies: [Movie] = []
+//    var movies: [Movie] = []
+    var movieModels: [MovieModel] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,31 +38,38 @@ class MovieTableViewController: UIViewController {
     }
     
     func tableOrderChange(_ orderType: Int) {
-        guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/movies?order_type=\(orderType)") else { return }
-        
-        let sesstion: URLSession = URLSession(configuration: .default)
-        let dataTask: URLSessionDataTask = sesstion.dataTask(with: url) { ( data: Data?, response: URLResponse?, error: Error?) in
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-                        
-            do {
-                let apiResponse: MovieAPIResponse = try JSONDecoder().decode(MovieAPIResponse.self, from: data)
-//                print(apiResponse.movies);
-                self.movies = apiResponse.movies
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            } catch (let err) {
-                print(err.localizedDescription)
+//        guard let url: URL = URL(string: "https://connect-boxoffice.run.goorm.io/movies?order_type=\(orderType)") else { return }
+//
+//        let sesstion: URLSession = URLSession(configuration: .default)
+//        let dataTask: URLSessionDataTask = sesstion.dataTask(with: url) { ( data: Data?, response: URLResponse?, error: Error?) in
+//            if let error = error {
+//                print(error.localizedDescription)
+//                return
+//            }
+//
+//            guard let data = data else { return }
+//
+//            do {
+//                let apiResponse: MovieAPIResponse = try JSONDecoder().decode(MovieAPIResponse.self, from: data)
+////                print(apiResponse.movies);
+//                self.movies = apiResponse.movies
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            } catch (let err) {
+//                print(err.localizedDescription)
+//            }
+//        }
+//
+//        dataTask.resume()
+//        self.navigationItem.title = self.orderName(orderType)
+        AF.request("\(BASE_URL)/movies?order_type=\(orderType)", method: .get, parameters: nil, encoding: JSONEncoding.default).responseJSON { [weak self] response in
+            if let result = response.value as? [String : Any], let movieResponseModel = MovieResponseModel(JSON: result) {
+                self?.movieModels = movieResponseModel.movies
+                self?.tableView.reloadData()
+                self?.navigationItem.title = self?.orderName(orderType)
             }
         }
-        
-        dataTask.resume()
-        self.navigationItem.title = self.orderName(orderType)
     }
     
     func  showAlertController(style: UIAlertController.Style) {
@@ -120,7 +129,7 @@ class MovieTableViewController: UIViewController {
         }
         
         if let index: Int = selectedCellIndexRow {
-            nextViewController.currentID = movies[index].id
+            nextViewController.currentID = movieModels[index].id
         }
     }
 
@@ -128,7 +137,7 @@ class MovieTableViewController: UIViewController {
 
 extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.movies.count
+        return self.movieModels.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -136,11 +145,11 @@ extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(for: indexPath) as MovieTableViewCell
         
 //        cell.leftLabel.text = self.dateFormatter.string(from: self.dates[indexPath.row])
-        let movie: Movie = self.movies[indexPath.row]
+        let movie: MovieModel = self.movieModels[indexPath.row]
 
         cell.titleLabel.text = movie.title
-        cell.infoLabel.text = movie.info
-        cell.dateLabel.text = movie.dateInfo
+//        cell.infoLabel.text = movie.info
+//        cell.dateLabel.text = movie.dateInfo
 
         guard let thumbImage: UIImage = UIImage(named: "img_placeholder") else{
             print("no thumb image")
@@ -148,14 +157,15 @@ extension MovieTableViewController: UITableViewDataSource, UITableViewDelegate {
         }
         cell.thumbImageView.image = thumbImage
 
-        let gradeName: String = movie.gradeName
-        guard let gradeImage: UIImage = UIImage(named: gradeName) else{
-            print("no grade image")
-            return cell
-        }
-        cell.gradeImageView.image = gradeImage
+//        guard let gradeName: String = movie.gradeName else { return cell}
+//        guard let gradeImage: UIImage = UIImage(named: gradeName) else{
+//            print("no grade image")
+//            return cell
+//        }
+//        cell.gradeImageView.image = gradeImage
 
-        let thumbName: String = movie.thumb
+        //kingfisher
+        guard let thumbName: String = movie.thumb else { return cell}
         
         DispatchQueue.global().async {
             guard let thumbURL: URL = URL(string: thumbName) else { return }

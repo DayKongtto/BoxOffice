@@ -1,5 +1,7 @@
 PODS:
+  - Alamofire (5.4.4)
   - Cosmos (23.0.0)
+  - ObjectMapper (4.2.0)
   - Reusable (4.1.1):
     - Reusable/Storyboard (= 4.1.1)
     - Reusable/View (= 4.1.1)
@@ -8,21 +10,27 @@ PODS:
   - SnapKit (5.0.1)
 
 DEPENDENCIES:
+  - Alamofire (~> 5.4)
   - Cosmos (~> 23.0)
+  - ObjectMapper
   - Reusable
   - SnapKit (~> 5.0.0)
 
 SPEC REPOS:
   trunk:
+    - Alamofire
     - Cosmos
+    - ObjectMapper
     - Reusable
     - SnapKit
 
 SPEC CHECKSUMS:
+  Alamofire: f3b09a368f1582ab751b3fff5460276e0d2cf5c9
   Cosmos: b5c6a9a637e28a061b54c8f8b1d8529d7d4db73f
+  ObjectMapper: 1eb41f610210777375fa806bf161dc39fb832b81
   Reusable: 53a9acf5c536f229b31b5865782414b508252ddb
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
 
-PODFILE CHECKSUM: cb46198e7e95e6bb488bf402d1131da588289332
+PODFILE CHECKSUM: 36b5833d824490b6c3ee1b0bef84b2e1ffbd660b
 
 COCOAPODS: 1.10.1

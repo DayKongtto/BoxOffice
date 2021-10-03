@@ -22,6 +22,9 @@
 		692B615626C79CEB0047F07A /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B615526C79CEB0047F07A /* BaseTableViewCell.swift */; };
 		692B615826C79FA40047F07A /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B615726C79FA40047F07A /* BaseCollectionViewCell.swift */; };
 		692B615A26C7ACC50047F07A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B615926C7ACC50047F07A /* Movie.swift */; };
+		69C3341D26FF02E50066AFDB /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C3341C26FF02E50066AFDB /* MovieModel.swift */; };
+		69C3341F26FF07680066AFDB /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C3341E26FF07680066AFDB /* Define.swift */; };
+		69C3342226FF0E980066AFDB /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C3342126FF0E980066AFDB /* CommentModel.swift */; };
 		69EABC3B26CA64B000F3B86E /* MovieCommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EABC3A26CA64B000F3B86E /* MovieCommentTableViewCell.swift */; };
 		69EABC3D26CA675400F3B86E /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69EABC3C26CA675400F3B86E /* CommentViewController.swift */; };
 /* End PBXBuildFile section */
@@ -44,6 +47,9 @@
 		692B615526C79CEB0047F07A /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		692B615726C79FA40047F07A /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		692B615926C7ACC50047F07A /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		69C3341C26FF02E50066AFDB /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
+		69C3341E26FF07680066AFDB /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
+		69C3342126FF0E980066AFDB /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
 		69EABC3A26CA64B000F3B86E /* MovieCommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCommentTableViewCell.swift; sourceTree = "<group>"; };
 		69EABC3C26CA675400F3B86E /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
 		95E7AA7485AA0C48AB7B8972 /* Pods-BoxOffice.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BoxOffice.debug.xcconfig"; path = "Target Support Files/Pods-BoxOffice/Pods-BoxOffice.debug.xcconfig"; sourceTree = "<group>"; };
@@ -92,6 +98,7 @@
 		692B613226C764A30047F07A /* BoxOffice */ = {
 			isa = PBXGroup;
 			children = (
+				69C3342026FF07740066AFDB /* Helper */,
 				69EABC4026CA755A00F3B86E /* Model */,
 				69EABC3F26CA753500F3B86E /* CustomCell */,
 				69EABC3E26CA752900F3B86E /* ViewControllers */,
@@ -104,6 +111,14 @@
 				692B614126C764A40047F07A /* Info.plist */,
 			);
 			path = BoxOffice;
+			sourceTree = "<group>";
+		};
+		69C3342026FF07740066AFDB /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				69C3341E26FF07680066AFDB /* Define.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 		69EABC3E26CA752900F3B86E /* ViewControllers */ = {
@@ -133,6 +148,8 @@
 			isa = PBXGroup;
 			children = (
 				692B615926C7ACC50047F07A /* Movie.swift */,
+				69C3341C26FF02E50066AFDB /* MovieModel.swift */,
+				69C3342126FF0E980066AFDB /* CommentModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -259,6 +276,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				69C3341D26FF02E50066AFDB /* MovieModel.swift in Sources */,
+				69C3342226FF0E980066AFDB /* CommentModel.swift in Sources */,
 				69EABC3D26CA675400F3B86E /* CommentViewController.swift in Sources */,
 				692B614826C78F280047F07A /* MovieTableViewController.swift in Sources */,
 				692B615226C78FFE0047F07A /* MovieTableViewCell.swift in Sources */,
@@ -271,6 +290,7 @@
 				692B615426C790210047F07A /* MovieCollectionViewCell.swift in Sources */,
 				692B613626C764A30047F07A /* SceneDelegate.swift in Sources */,
 				69EABC3B26CA64B000F3B86E /* MovieCommentTableViewCell.swift in Sources */,
+				69C3341F26FF07680066AFDB /* Define.swift in Sources */,
 				692B615626C79CEB0047F07A /* BaseTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -420,12 +440,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9QS9LS8FVP;
 				INFOPLIST_FILE = BoxOffice/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = psj.BoxOffice;
+				PRODUCT_BUNDLE_IDENTIFIER = psj.BoxOffice1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -439,12 +460,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 9QS9LS8FVP;
 				INFOPLIST_FILE = BoxOffice/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = psj.BoxOffice;
+				PRODUCT_BUNDLE_IDENTIFIER = psj.BoxOffice1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -7,6 +7,7 @@
 
 import UIKit
 import Cosmos
+import Alamofire
 
 class CommentViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
@@ -64,85 +65,75 @@ class CommentViewController: UIViewController {
     
     func sendComment()
     {
-        let currentRating: Double = cosmosView.rating
-        guard let writerText: String = nameTextField.text else {
-            return
-        }
-
-        guard let contentsText: String = contentTextField.text else {
-            return
-        }
-
-        guard let id: String = currentID else {
-            return
-        }
-
-//        let timeStamp: Double = Date().timeIntervalSince1970
-
-        let comment: CommentSend = CommentSend(rating: currentRating, writer: writerText, movie_id: id, contents: contentsText)
-        dataRequest(comment)
-    }
-    
-    func dataRequest(_ comment: CommentSend) {
+        let param: [String: Any] = [ "rating": cosmosView.rating,
+                                     "writer": nameTextField.text ?? "",
+                                     "movie_id": currentID ?? "",
+                                     "contents": contentTextField.text ?? ""]
         
-        guard let uploadData = try? JSONEncoder().encode(comment) else {
-            return
-        }
-        
-        let url = URL(string: "http://connect-boxoffice.run.goorm.io/comment")!
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
-            if let error = error {
-                print ("error: \(error)")
-                return
-            }
-            guard let response = response as? HTTPURLResponse,
-                (200...299).contains(response.statusCode) else {
-                print ("server error")
-                return
-            }
-            if let mimeType = response.mimeType,
-                mimeType == "application/json",
-                let data = data,
-                let dataString = String(data: data, encoding: .utf8) {
-                print ("got data: \(dataString)")
-            }
-            
-            
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                self.navigationController?.popViewController(animated: true)
+        AF.request("\(BASE_URL)/comment", method: .post, parameters: param, encoding: JSONEncoding.default).response { [weak self] response in
+            if let statusCode = response.response?.statusCode, (200...299).contains(statusCode){
+                self?.navigationController?.popViewController(animated: true)
+            } else {
+                print("error")
             }
         }
-        task.resume()
         
-//        let sesstion: URLSession = URLSession(configuration: .default)
-//        let dataTask: URLSessionDataTask = sesstion.dataTask(with: url) { ( data: Data?, response: URLResponse?, error: Error?) in
-//            if let error = error {
-//                print(error.localizedDescription)
-//                return
-//            }
-//
-//            guard let data = data else { return }
-//
-//            do {
-//                let apiResponse: MovieAPIResponse = try JSONDecoder().decode(MovieAPIResponse.self, from: data)
-////                print(apiResponse.movies);
-//                self.movies = apiResponse.movies
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//            } catch (let err) {
-//                print(err.localizedDescription)
-//            }
+//        let currentRating: Double = cosmosView.rating
+//        guard let writerText: String = nameTextField.text else {
+//            return
 //        }
 //
-//        dataTask.resume()
-//        self.navigationItem.title = self.orderName(orderType)
+//        guard let contentsText: String = contentTextField.text else {
+//            return
+//        }
+//
+//        guard let id: String = currentID else {
+//            return
+//        }
+//
+////        let timeStamp: Double = Date().timeIntervalSince1970
+//
+//        let comment: CommentSend = CommentSend(rating: currentRating, writer: writerText, movie_id: id, contents: contentsText)
+//        dataRequest(comment)
     }
+    
+//    func dataRequest(_ comment: CommentSendModel?) {
+//
+//        guard let uploadData = try? JSONEncoder().encode(comment) else {
+//            return
+//        }
+//
+//        let url = URL(string: "http://connect-boxoffice.run.goorm.io/comment")!
+//        var request = URLRequest(url: url)
+//        request.httpMethod = "POST"
+//        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//        let task = URLSession.shared.uploadTask(with: request, from: uploadData) { data, response, error in
+//            if let error = error {
+//                print ("error: \(error)")
+//                return
+//            }
+//            guard let response = response as? HTTPURLResponse,
+//                (200...299).contains(response.statusCode) else {
+//                print ("server error")
+//                return
+//            }
+//            if let mimeType = response.mimeType,
+//                mimeType == "application/json",
+//                let data = data,
+//                let dataString = String(data: data, encoding: .utf8) {
+//                print ("got data: \(dataString)")
+//            }
+//
+//
+//            DispatchQueue.main.async { [weak self] in
+//                guard let self = self else { return }
+//                self.navigationController?.popViewController(animated: true)
+//            }
+//        }
+//        task.resume()
+        
+//    }
 
     /*
     // MARK: - Navigation
