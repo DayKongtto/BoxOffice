@@ -23,12 +23,14 @@ class MovieCollectionViewController: UIViewController {
         self.collectionView.dataSource = self
         
         self.collectionView.register(cellType: MovieCollectionViewCell.self)
+        
+        self.tableOrderChange(0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableOrderChange(0)
+//        self.tableOrderChange(0)
     }
     
     @IBAction func touchUpShowActionSOrderButton()

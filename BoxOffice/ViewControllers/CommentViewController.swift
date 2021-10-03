@@ -50,8 +50,7 @@ class CommentViewController: UIViewController {
         }
     }
     
-    func changedUserRating(rating : Double)
-    {
+    func changedUserRating(rating : Double) {
         ratingLabel.text = "\(Int(cosmosView.rating * 2))"
     }
     

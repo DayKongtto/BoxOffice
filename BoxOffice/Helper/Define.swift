@@ -20,12 +20,4 @@ func getGradeName(_ grade:Int) -> String? {
     }
 }
 
-func timeFormatter(timestamp: TimeInterval) -> String? {
 
- let dateFormatter = DateFormatter()
- dateFormatter.locale = Locale(identifier: "ko_KR")
- dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-
- let date = Date(timeIntervalSince1970: timestamp)
- return dateFormatter.string(from: date)
-}

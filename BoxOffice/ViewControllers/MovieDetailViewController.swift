@@ -164,7 +164,8 @@ extension MovieDetailViewController: UITableViewDataSource, UITableViewDelegate 
         if let cosmosRating = comment.rating {
             cell.cosmosView.rating = cosmosRating * 0.5
         }
-        if let date: String = timeFormatter(timestamp: TimeInterval(comment.timestamp ?? 0)) {
+//        if let date: String = timeFormatter(timestamp: TimeInterval(comment.timestamp ?? 0)) {
+        if let timestamp = comment.timestamp, let date: String = timestamp.timeFormatter() {
             cell.dateLabel.text = "\(date)"
         }
         cell.commentLabel.text = comment.contents

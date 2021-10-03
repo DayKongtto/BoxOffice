@@ -11,7 +11,6 @@
 		6921FE0927092D4A007E6693 /* MovieDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6921FE0827092D4A007E6693 /* MovieDetailModel.swift */; };
 		692B613426C764A30047F07A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B613326C764A30047F07A /* AppDelegate.swift */; };
 		692B613626C764A30047F07A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B613526C764A30047F07A /* SceneDelegate.swift */; };
-		692B613826C764A30047F07A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B613726C764A30047F07A /* ViewController.swift */; };
 		692B613B26C764A30047F07A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 692B613926C764A30047F07A /* Main.storyboard */; };
 		692B613D26C764A40047F07A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 692B613C26C764A40047F07A /* Assets.xcassets */; };
 		692B614026C764A40047F07A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 692B613E26C764A40047F07A /* LaunchScreen.storyboard */; };
@@ -23,6 +22,7 @@
 		692B615626C79CEB0047F07A /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B615526C79CEB0047F07A /* BaseTableViewCell.swift */; };
 		692B615826C79FA40047F07A /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B615726C79FA40047F07A /* BaseCollectionViewCell.swift */; };
 		692B615A26C7ACC50047F07A /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692B615926C7ACC50047F07A /* Movie.swift */; };
+		69B467E12709A090001038EE /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69B467E02709A090001038EE /* Double.swift */; };
 		69C3341D26FF02E50066AFDB /* MovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C3341C26FF02E50066AFDB /* MovieModel.swift */; };
 		69C3341F26FF07680066AFDB /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C3341E26FF07680066AFDB /* Define.swift */; };
 		69C3342226FF0E980066AFDB /* CommentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69C3342126FF0E980066AFDB /* CommentModel.swift */; };
@@ -36,7 +36,6 @@
 		692B613026C764A30047F07A /* BoxOffice.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BoxOffice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		692B613326C764A30047F07A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		692B613526C764A30047F07A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		692B613726C764A30047F07A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		692B613A26C764A30047F07A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		692B613C26C764A40047F07A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		692B613F26C764A40047F07A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +48,7 @@
 		692B615526C79CEB0047F07A /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		692B615726C79FA40047F07A /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		692B615926C7ACC50047F07A /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		69B467E02709A090001038EE /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Double.swift; path = ../../../../../../Downloads/Double.swift; sourceTree = "<group>"; };
 		69C3341C26FF02E50066AFDB /* MovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieModel.swift; sourceTree = "<group>"; };
 		69C3341E26FF07680066AFDB /* Define.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Define.swift; sourceTree = "<group>"; };
 		69C3342126FF0E980066AFDB /* CommentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentModel.swift; sourceTree = "<group>"; };
@@ -106,7 +106,6 @@
 				69EABC3E26CA752900F3B86E /* ViewControllers */,
 				692B613326C764A30047F07A /* AppDelegate.swift */,
 				692B613526C764A30047F07A /* SceneDelegate.swift */,
-				692B613726C764A30047F07A /* ViewController.swift */,
 				692B613926C764A30047F07A /* Main.storyboard */,
 				692B613C26C764A40047F07A /* Assets.xcassets */,
 				692B613E26C764A40047F07A /* LaunchScreen.storyboard */,
@@ -115,9 +114,18 @@
 			path = BoxOffice;
 			sourceTree = "<group>";
 		};
+		69B467DF2709A07D001038EE /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				69B467E02709A090001038EE /* Double.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		69C3342026FF07740066AFDB /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				69B467DF2709A07D001038EE /* Extension */,
 				69C3341E26FF07680066AFDB /* Define.swift */,
 			);
 			path = Helper;
@@ -285,12 +293,12 @@
 				692B614826C78F280047F07A /* MovieTableViewController.swift in Sources */,
 				692B615226C78FFE0047F07A /* MovieTableViewCell.swift in Sources */,
 				692B615A26C7ACC50047F07A /* Movie.swift in Sources */,
-				692B613826C764A30047F07A /* ViewController.swift in Sources */,
 				692B614A26C78F3D0047F07A /* MovieCollectionViewController.swift in Sources */,
 				692B615826C79FA40047F07A /* BaseCollectionViewCell.swift in Sources */,
 				692B613426C764A30047F07A /* AppDelegate.swift in Sources */,
 				692B614C26C78F5F0047F07A /* MovieDetailViewController.swift in Sources */,
 				6921FE0927092D4A007E6693 /* MovieDetailModel.swift in Sources */,
+				69B467E12709A090001038EE /* Double.swift in Sources */,
 				692B615426C790210047F07A /* MovieCollectionViewCell.swift in Sources */,
 				692B613626C764A30047F07A /* SceneDelegate.swift in Sources */,
 				69EABC3B26CA64B000F3B86E /* MovieCommentTableViewCell.swift in Sources */,
